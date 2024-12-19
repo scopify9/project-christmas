@@ -10,23 +10,42 @@
       margin: 0;
       background: linear-gradient(to bottom, #1a365d, #2a4365);
       font-family: Arial, sans-serif;
+      perspective: 1000px;
     }
 
-    .card {
-      position: relative;
+    .card-container {
       width: 300px;
       height: 400px;
+      position: relative;
+      transition: transform 1s;
+      transform-style: preserve-3d;
+      cursor: pointer;
+    }
+
+    .card-container.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .card-front, .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
       background: white;
       border-radius: 10px;
       box-shadow: 0 0 20px rgba(0,0,0,0.2);
       overflow: hidden;
-      transform-style: preserve-3d;
-      transform: perspective(1000px);
-      transition: transform 0.5s;
     }
 
-    .card:hover {
-      transform: perspective(1000px) rotateY(5deg);
+    .card-back {
+      transform: rotateY(180deg);
+      padding: 20px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #fff8f8, #ffecd2);
     }
 
     .snow {
@@ -41,12 +60,8 @@
     }
 
     @keyframes snow {
-      from {
-        background-position: 0 0, 50px 50px;
-      }
-      to {
-        background-position: 100px 100px, 150px 150px;
-      }
+      from { background-position: 0 0, 50px 50px; }
+      to { background-position: 100px 100px, 150px 150px; }
     }
 
     .tree {
@@ -97,6 +112,25 @@
       text-shadow: 0 0 5px rgba(255,255,255,0.5);
     }
 
+    .back-message {
+      text-align: center;
+      color: #1A365D;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    .heart {
+      color: #E53E3E;
+      font-size: 24px;
+      animation: heartBeat 1.5s ease-in-out infinite;
+    }
+
+    @keyframes heartBeat {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
     .ornaments {
       position: absolute;
       width: 10px;
@@ -117,17 +151,28 @@
   </style>
 </head>
 <body>
-  <div class="card">
-    <div class="snow"></div>
-    <div class="message">
-      Chúc Mừng Giáng Sinh!<br>
-      Merry Christmas!
+  <div class="card-container" onclick="this.classList.toggle('flipped')">
+    <div class="card-front">
+      <div class="snow"></div>
+      <div class="message">
+        Chúc Mừng Giáng Sinh!<br>
+        Merry Christmas!
+      </div>
+      <div class="tree">
+        <div class="star"></div>
+        <div class="ornaments ornament1"></div>
+        <div class="ornaments ornament2"></div>
+        <div class="ornaments ornament3"></div>
+      </div>
     </div>
-    <div class="tree">
-      <div class="star"></div>
-      <div class="ornaments ornament1"></div>
-      <div class="ornaments ornament2"></div>
-      <div class="ornaments ornament3"></div>
+    <div class="card-back">
+      <div class="back-message">
+        <p>Chúc Mừng Giáng Sinh An Lành!</p>
+        <p>Chúc bạn và gia đình có một mùa Giáng sinh tràn ngập niềm vui,<br>
+        hạnh phúc và những điều kỳ diệu.</p>
+        <p>Mong rằng tình yêu và bình an sẽ ở mãi bên bạn <span class="heart">♥</span></p>
+        <p>~ Gửi đến người thân yêu ~</p>
+      </div>
     </div>
   </div>
 </body>
